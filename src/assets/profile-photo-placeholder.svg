@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12141c"/>
+      <stop offset="100%" stop-color="#0a0b10"/>
+    </linearGradient>
+    <linearGradient id="figGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2f3d"/>
+      <stop offset="100%" stop-color="#1a1d26"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4de8c9"/>
+      <stop offset="100%" stop-color="#8b7cf6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="480" height="600" fill="url(#bgGrad)"/>
+
+  <g opacity="0.5" stroke="#2a2e3a" stroke-width="1">
+    <line x1="0" y1="150" x2="480" y2="150"/>
+    <line x1="0" y1="300" x2="480" y2="300"/>
+    <line x1="0" y1="450" x2="480" y2="450"/>
+    <line x1="120" y1="0" x2="120" y2="600"/>
+    <line x1="240" y1="0" x2="240" y2="600"/>
+    <line x1="360" y1="0" x2="360" y2="600"/>
+  </g>
+
+  <circle cx="240" cy="230" r="86" fill="none" stroke="url(#ringGrad)" stroke-width="2" opacity="0.6"/>
+
+  <!-- simple abstracted figure silhouette, standing in for a real portrait -->
+  <circle cx="240" cy="215" r="66" fill="url(#figGrad)"/>
+  <path d="M 110 560 C 110 430 165 380 240 380 C 315 380 370 430 370 560 Z" fill="url(#figGrad)"/>
+
+  <text x="240" y="560" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#6b7180">
+    replace with profile-photo.jpg
+  </text>
+</svg>

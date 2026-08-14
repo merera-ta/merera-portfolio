@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Deep, layered dark palette — near-black with a faint blue undertone,
+     rather than flat #000, so blur/glow effects have somewhere to live. */
+  --bg: 6 7 11;
+  --bg-elevated: 12 14 20;
+  --surface: 15 17 24;
+  --surface-2: 19 22 30;
+  --border: 27 30 40;
+  --border-strong: 40 44 58;
+  --text: 237 238 242;
+  --text-muted: 143 148 163;
+
+  /* Two accents only: teal (primary / interactive) and violet (secondary /
+     gradient partner). Amber is reserved for tiny "system" details. */
+  --accent: 77 232 201;
+  --accent-dim: 45 197 168;
+  --violet: 139 124 246;
+  --amber: 245 166 35;
+  --danger: 248 113 113;
+  --success: 74 222 158;
+}
+
+:root.light {
+  --bg: 247 248 250;
+  --bg-elevated: 255 255 255;
+  --surface: 255 255 255;
+  --surface-2: 247 248 250;
+  --border: 226 229 235;
+  --border-strong: 205 209 219;
+  --text: 15 17 23;
+  --text-muted: 91 100 120;
+
+  --accent: 13 148 136;
+  --accent-dim: 15 118 110;
+  --violet: 109 90 226;
+  --amber: 180 83 9;
+  --danger: 220 38 38;
+  --success: 5 150 105;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.3);
+  color: rgb(var(--text));
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--accent-dim));
+}
+
+/* Hide the native cursor only when the custom cursor is active (desktop,
+   fine pointer, motion allowed). CustomCursor.jsx toggles this class on
+   <html>, so touch devices and prefers-reduced-motion always keep the
+   native cursor. */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+.section-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: rgb(var(--accent));
+}
+
+.glass {
+  background: rgb(var(--surface) / 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Gradient text for highlighted keywords — used sparingly (one or two
+   words per headline), never whole paragraphs. */
+.text-gradient {
+  background-image: linear-gradient(100deg, rgb(var(--accent)), rgb(var(--violet)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Faint structural grid, used behind the hero and as a quiet section
+   divider. Kept low-opacity so it reads as texture, not decoration. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--border) / 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--border) / 0.5) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Subtle film-grain noise, layered over the mesh gradient so large flat
+   glow areas don't look banded or plasticky. */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* Card glow that follows the cursor, driven by --mx/--my custom properties
+   set on mousemove (see GlowCard). Falls back to no glow if JS hasn't set
+   the vars yet. */
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(var(--accent) / 0.5),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.glow-border:hover::before {
+  opacity: 1;
+}
