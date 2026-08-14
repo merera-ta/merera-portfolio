@@ -1,7 +1,5 @@
 // Central place for personal details shown across the site.
 // Edit these values to update your name, role, and contact info everywhere at once.
-export const siteConfig = {
-  name: '<MT/>',
   firstName: 'Merera',
   role: 'MERN Stack Developer',
   roleLong: 'MERN Stack Developer | Full-Stack Web Developer',
