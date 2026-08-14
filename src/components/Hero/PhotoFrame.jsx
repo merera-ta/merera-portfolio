@@ -6,7 +6,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { Code2, Database, Server } from "lucide-react";
-import profilePhoto from "../../assets/merera.jp";
+import profilePhoto from "../../assets/merera.jpg";
 
 // Floating glass chip that hovers near a corner of the portrait, labelling
 // one layer of the stack. Purely decorative metadata, not a fake stat.
