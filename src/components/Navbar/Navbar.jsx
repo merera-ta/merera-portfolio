@@ -9,12 +9,12 @@ import { siteConfig } from '../../data/siteConfig.js'
 import { cn } from '../../utils/cn.js'
 
 const NAV_LINKS = [
-  { id: 'home', label: 'home' },
-  { id: 'about', label: 'about' },
-  { id: 'skills', label: 'skills' },
-  { id: 'projects', label: 'projects' },
-  { id: 'journey', label: 'journey' },
-  { id: 'contact', label: 'contact' },
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'journey', label: 'Journey' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 function NavPath({ id, label, active, onClick }) {

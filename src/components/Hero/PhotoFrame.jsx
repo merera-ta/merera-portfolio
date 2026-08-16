@@ -101,7 +101,7 @@ function PhotoFrame({ revealDelay = 0 }) {
         <div className="relative overflow-hidden rounded-[2rem] bg-elevated">
           <img
             src={profilePhoto}
-            alt="Portrait of Merera Taddesa"
+            alt="Portrait of "
             className="aspect-[4/5] w-full object-cover"
             width={480}
             height={600}

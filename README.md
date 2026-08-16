@@ -180,3 +180,4 @@ build` — verified statically instead:
   Skills, Projects, Journey, and Contact after the Journey/Contact rewrite.
 
 Please still run `npm install && npm run build` yourself before deploying.
+[text](<../../../Users/hp g/Downloads/schoolguardian-frontend>)

@@ -1,34 +1,57 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
+
 import TerminalWindow from "./TerminalWindow.jsx";
 import PhotoFrame from "./PhotoFrame.jsx";
 import ScrollIndicator from "./ScrollIndicator.jsx";
 import GradientMesh from "../Background/GradientMesh.jsx";
 import { siteConfig } from "../../data/siteConfig.js";
 
-// Timing for the choreographed entrance. Each stage waits for the previous
-// one to be underway rather than firing all at once — background, then
-// metadata, then the two name lines (staggered), then the portrait
-// (clip-path reveal, timed in PhotoFrame via revealDelay), then the
-// supporting line and actions, then the scroll cue last.
+/* ----------------------------------------
+   Animation configuration
+----------------------------------------- */
+
 const STAGE = {
   meta: 0.15,
-  nameLine1: 0.32,
-  nameLine2: 0.44,
+  nameLine1: 0.3,
+  nameLine2: 0.42,
   portrait: 0.55,
-  support: 0.95,
-  actions: 1.1,
+  support: 0.85,
+  actions: 1.05,
+  terminal: 1.15,
   scroll: 1.5,
 };
 
-function FadeUp({ children, delay, className, as = "div" }) {
+const EASE = [0.22, 1, 0.36, 1];
+
+/* ----------------------------------------
+   Reusable fade-up animation
+----------------------------------------- */
+
+function FadeUp({ children, delay = 0, className = "", as = "div" }) {
   const shouldReduceMotion = useReducedMotion();
-  const Component = motion[as] ?? motion.div;
+
+  const Component = motion[as] || motion.div;
+
   return (
     <Component
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={
+        shouldReduceMotion
+          ? false
+          : {
+              opacity: 0,
+              y: 24,
+            }
+      }
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: EASE,
+      }}
       className={className}
     >
       {children}
@@ -36,16 +59,31 @@ function FadeUp({ children, delay, className, as = "div" }) {
   );
 }
 
-// A masked line reveal — the text clips in from below rather than simply
-// fading, which reads as more deliberate for the two oversized name lines.
-function RevealLine({ children, delay, className }) {
+/* ----------------------------------------
+   Animated text reveal
+----------------------------------------- */
+
+function RevealLine({ children, delay = 0, className = "" }) {
   const shouldReduceMotion = useReducedMotion();
+
   return (
     <span className="block overflow-hidden">
       <motion.span
-        initial={shouldReduceMotion ? false : { y: "110%" }}
-        animate={{ y: "0%" }}
-        transition={{ duration: 0.9, delay, ease: [0.65, 0, 0.35, 1] }}
+        initial={
+          shouldReduceMotion
+            ? false
+            : {
+                y: "110%",
+              }
+        }
+        animate={{
+          y: "0%",
+        }}
+        transition={{
+          duration: 0.9,
+          delay,
+          ease: [0.65, 0, 0.35, 1],
+        }}
         className={`block ${className}`}
       >
         {children}
@@ -54,99 +92,202 @@ function RevealLine({ children, delay, className }) {
   );
 }
 
+/* ----------------------------------------
+   Hero action link
+----------------------------------------- */
+
+function HeroLink({ href, children, primary = false, icon = false }) {
+  return (
+    <a
+      href={href}
+      data-cursor-hover
+      className={
+        primary
+          ? "group inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-3 font-mono text-sm font-semibold text-bg transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:shadow-lg hover:shadow-accent/20 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+          : "font-mono text-sm text-muted transition-colors duration-200 hover:text-ink focus:outline-none focus:text-ink"
+      }
+    >
+      {children}
+
+      {icon && (
+        <ArrowRight
+          size={16}
+          aria-hidden="true"
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        />
+      )}
+    </a>
+  );
+}
+
+/* ----------------------------------------
+   Hero component
+----------------------------------------- */
+
 function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-[92vh] flex flex-col justify-center pt-32 pb-24 md:pt-36 overflow-hidden"
+      aria-labelledby="hero-title"
+      className="
+        relative
+        flex
+        min-h-[90vh]
+        flex-col
+        justify-center
+        overflow-hidden
+        pt-28
+        pb-16
+        md:pt-32
+      "
     >
+      {/* Background */}
       <GradientMesh />
 
-      <div className="relative max-w-wide mx-auto px-6 w-full">
-        <div className="grid md:grid-cols-[1fr_1.35fr] gap-12 lg:gap-16 items-center">
+      <div className="relative mx-auto w-full max-w-wide px-6">
+        <div
+          className="
+            grid
+            items-center
+            gap-12
+            md:grid-cols-[1fr_1.35fr]
+            lg:gap-16
+          "
+        >
+          {/* --------------------------------
+              Portrait
+          --------------------------------- */}
+
           <div className="relative order-2 md:order-1">
             <PhotoFrame revealDelay={STAGE.portrait} />
           </div>
 
-          <div className="order-1 md:order-2">
-            <FadeUp
-              delay={STAGE.meta}
-              className="section-eyebrow mb-6 uppercase tracking-[0.18em]"
-            >
-              {siteConfig.department} / MERN Stack Developer &middot;{" "}
-              {siteConfig.university}
-            </FadeUp>
+          {/* --------------------------------
+              Hero content
+          --------------------------------- */}
 
-            <h1 className="font-display font-semibold tracking-tight text-ink leading-[0.95]">
+          <div className="order-1 md:order-2">
+            {/* Meta information */}
+
+
+            {/* Name */}
+
+            <h1
+              id="hero-title"
+              className="
+                font-display
+                font-semibold
+                leading-[0.95]
+                tracking-tight
+                text-ink
+              "
+            >
               <RevealLine
                 delay={STAGE.nameLine1}
                 className="text-[15vw] sm:text-7xl lg:text-8xl"
               >
-                Merera
+                Hi I'm Merera
               </RevealLine>
+
               <RevealLine
                 delay={STAGE.nameLine2}
-                className="text-[15vw] sm:text-7xl lg:text-8xl text-gradient"
+                className="
+                  text-[15vw]
+                  text-gradient
+                  sm:text-7xl
+                  lg:text-8xl
+                "
               >
                 Taddesa
               </RevealLine>
             </h1>
 
+            {/* Description */}
+
             <FadeUp
               delay={STAGE.support}
-              className="mt-8 max-w-md text-muted text-base sm:text-lg leading-relaxed"
+              className="
+                mt-8
+                max-w-md
+                text-base
+                leading-relaxed
+                text-muted
+                sm:text-lg
+              "
             >
               Building modern, scalable web experiences with the MERN stack —
               MongoDB, Express, React, and Node.js — one real project at a time.
             </FadeUp>
 
+            {/* Actions */}
+
             <FadeUp
               delay={STAGE.actions}
-              className="mt-9 flex flex-wrap items-center gap-6"
+              className="
+                mt-9
+                flex
+                flex-wrap
+                items-center
+                gap-5
+              "
             >
-              <a
-                href="#projects"
-                data-cursor-hover
-                className="group inline-flex items-center gap-2.5 font-mono text-sm font-semibold text-ink hover:text-accent transition-colors duration-200"
-              >
+              {/* Primary CTA */}
+
+              <HeroLink href="#projects" primary icon>
                 View the work
-                <ArrowRight
-                  size={16}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </a>
-              <a
-                href="#contact"
-                data-cursor-hover
-                className="font-mono text-sm text-muted hover:text-ink transition-colors duration-200"
-              >
-                Get in touch
-              </a>
-              <a
-                href={siteConfig.resumeUrl}
-                data-cursor-hover
-                className="font-mono text-sm text-muted hover:text-ink transition-colors duration-200"
-              >
-                Download CV
-              </a>
+              </HeroLink>
+
+              {/* Secondary actions */}
+
+              <div className="flex items-center gap-5">
+                <HeroLink href="#contact">Get in touch</HeroLink>
+
+                <span className="h-3 w-px bg-muted/30" aria-hidden="true" />
+
+                <HeroLink href={siteConfig.resumeUrl}>Download CV</HeroLink>
+              </div>
             </FadeUp>
           </div>
         </div>
 
+        {/* --------------------------------
+            Desktop terminal
+        --------------------------------- */}
+
         <FadeUp
-          delay={STAGE.support + 0.1}
-          className="hidden lg:block mt-16 max-w-xs"
+          delay={STAGE.terminal}
+          className="mt-10 hidden max-w-xs lg:block"
         >
           <TerminalWindow />
         </FadeUp>
       </div>
 
-      <div className="lg:hidden max-w-content mx-auto px-6 mt-14 w-full">
+      {/* --------------------------------
+          Mobile terminal
+      --------------------------------- */}
+
+      <div
+        className="
+          mx-auto
+          mt-14
+          w-full
+          max-w-content
+          px-6
+          lg:hidden
+        "
+      >
         <TerminalWindow />
       </div>
 
+      {/* --------------------------------
+          Desktop scroll indicator
+      --------------------------------- */}
+
       <ScrollIndicator delay={STAGE.scroll} />
+
+      {/* --------------------------------
+          Mobile scroll indicator
+      --------------------------------- */}
 
       <motion.a
         href="#about"
@@ -154,10 +295,27 @@ function Hero() {
         aria-label="Scroll to About section"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: STAGE.scroll }}
-        className="sm:hidden mx-auto mt-10 flex items-center gap-2 font-mono text-xs text-muted"
+        transition={{
+          duration: 0.6,
+          delay: STAGE.scroll,
+        }}
+        className="
+          mx-auto
+          mt-10
+          flex
+          items-center
+          gap-2
+          font-mono
+          text-xs
+          text-muted
+          transition-colors
+          hover:text-ink
+          sm:hidden
+        "
       >
-        Scroll <ArrowDown size={13} aria-hidden="true" />
+        <span>Scroll</span>
+
+        <ArrowDown size={13} aria-hidden="true" className="animate-bounce" />
       </motion.a>
     </section>
   );
