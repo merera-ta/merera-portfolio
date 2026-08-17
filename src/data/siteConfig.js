@@ -13,6 +13,5 @@ export const siteConfig = {
   location: "Jimma, Ethiopia",
   resumeUrl: "/Merera-Taddesa-CV.pdf",
 
-  about:
-    "I'm a Software Engineering student at Jimma University, currently in my 2nd year, with a strong focus on full-stack web development. I work primarily with the MERN stack — MongoDB, Express.js, React, and Node.js — and I enjoy turning ideas into real, working applications rather than just studying theory. I'm continuously learning modern web technologies and best practices, and I care about building applications that are scalable, maintainable, and genuinely easy for people to use.",
+  about: "I'm a Software Engineering student focused on full-stack web development. I work primarily with the MERN stack — MongoDB, Express.js, React, and Node.js — and enjoy turning ideas into real, working applications. I'm continuously learning modern web technologies and best practices, with a focus on building software that is scalable, maintainable, and genuinely useful.",
 };
