@@ -169,39 +169,38 @@ function Hero() {
           <div className="order-1 md:order-2">
             {/* Meta information */}
 
-
             {/* Name */}
 
             <h1
               id="hero-title"
               className="
-                font-display
-                font-semibold
-                leading-[0.95]
-                tracking-tight
-                text-ink
-              "
+    font-display
+    font-semibold
+    leading-[0.95]
+    tracking-tight
+    text-ink
+  "
             >
               <RevealLine
                 delay={STAGE.nameLine1}
                 className="text-[15vw] sm:text-7xl lg:text-8xl"
               >
-                Hi I'm Merera
+                Hello,
               </RevealLine>
 
               <RevealLine
                 delay={STAGE.nameLine2}
                 className="
-                  text-[15vw]
-                  text-gradient
-                  sm:text-7xl
-                  lg:text-8xl
-                "
+      text-[16vw]
+      font-bold
+      tracking-[-0.04em]
+      sm:text-7xl
+      lg:text-8xl
+    "
               >
-                Taddesa
+                I'm <span className="text-gradient">Merera Taddesa</span>
               </RevealLine>
             </h1>
-
             {/* Description */}
 
             <FadeUp
