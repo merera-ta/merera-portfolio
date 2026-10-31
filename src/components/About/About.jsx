@@ -43,7 +43,7 @@ function About() {
             className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-ink leading-[1.05]"
           >
             I’m Merera Taddesa — a{" "}
-            <span className="text-gradient">Software Engineering student</span>{" "}
+            <span className="text-gradient">Computer Science student</span>{" "}
             building toward full-stack development.
           </motion.h2>
 
