@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Download } from "lucide-react";
 
 import TerminalWindow from "./TerminalWindow.jsx";
 import PhotoFrame from "./PhotoFrame.jsx";
@@ -94,23 +94,35 @@ function RevealLine({ children, delay = 0, className = "" }) {
 
 /* ----------------------------------------
    Hero action link
+   variant: "primary" | "outline" | "text"
 ----------------------------------------- */
 
-function HeroLink({ href, children, primary = false, icon = false }) {
+function HeroLink({
+  href,
+  children,
+  variant = "text",
+  icon: Icon,
+  download = false,
+}) {
+  const styles = {
+    primary:
+      "group inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-3 font-mono text-sm font-semibold text-bg transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:shadow-lg hover:shadow-accent/20 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
+    outline:
+      "group inline-flex items-center gap-2.5 rounded-full border border-ink/30 px-6 py-3 font-mono text-sm font-semibold text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
+    text: "font-mono text-sm text-muted transition-colors duration-200 hover:text-ink focus:outline-none focus:text-ink",
+  };
+
   return (
     <a
       href={href}
       data-cursor-hover
-      className={
-        primary
-          ? "group inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-3 font-mono text-sm font-semibold text-bg transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent hover:shadow-lg hover:shadow-accent/20 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-          : "font-mono text-sm text-muted transition-colors duration-200 hover:text-ink focus:outline-none focus:text-ink"
-      }
+      download={download || undefined}
+      className={styles[variant]}
     >
       {children}
 
-      {icon && (
-        <ArrowRight
+      {Icon && (
+        <Icon
           size={16}
           aria-hidden="true"
           className="transition-transform duration-300 group-hover:translate-x-1"
@@ -136,9 +148,9 @@ function Hero() {
         flex-col
         justify-center
         overflow-hidden
-        pt-28
+        pt-32
         pb-16
-        md:pt-32
+        md:pt-36
       "
     >
       {/* Background */}
@@ -167,40 +179,27 @@ function Hero() {
           --------------------------------- */}
 
           <div className="order-1 md:order-2">
-            {/* Meta information */}
-
             {/* Name */}
 
             <h1
               id="hero-title"
-              className="
-    font-display
-    font-semibold
-    leading-[0.95]
-    tracking-tight
-    text-ink
-  "
+              className="font-display font-semibold leading-[1.05] tracking-tight text-ink"
             >
               <RevealLine
                 delay={STAGE.nameLine1}
-                className="text-[15vw] sm:text-7xl lg:text-8xl"
+                className="text-[9vw] font-medium sm:text-4xl lg:text-5xl"
               >
-                Hello,
+                Hello, I'm
               </RevealLine>
 
               <RevealLine
                 delay={STAGE.nameLine2}
-                className="
-      text-[16vw]
-      font-bold
-      tracking-[-0.04em]
-      sm:text-7xl
-      lg:text-8xl
-    "
+                className="text-[11vw] font-bold tracking-[-0.04em] sm:text-6xl md:text-5xl lg:text-6xl xl:text-7xl"
               >
-                I'm <span className="text-gradient">Merera Taddesa</span>
+                <span className="text-gradient">Merera Taddesa</span>
               </RevealLine>
             </h1>
+
             {/* Description */}
 
             <FadeUp
@@ -214,37 +213,30 @@ function Hero() {
                 sm:text-lg
               "
             >
-              Building modern, scalable web experiences with the MERN stack —
-              MongoDB, Express, React, and Node.js — one real project at a time.
+              I build full-stack web apps with the MERN stack — MongoDB,
+              Express, React, and Node.js — and ship one real project at a time.
             </FadeUp>
 
             {/* Actions */}
 
             <FadeUp
               delay={STAGE.actions}
-              className="
-                mt-9
-                flex
-                flex-wrap
-                items-center
-                gap-5
-              "
+              className="mt-9 flex flex-wrap items-center gap-4"
             >
-              {/* Primary CTA */}
-
-              <HeroLink href="#projects" primary icon>
+              <HeroLink href="#projects" variant="primary" icon={ArrowRight}>
                 View the work
               </HeroLink>
 
-              {/* Secondary actions */}
+              <HeroLink
+                href={siteConfig.resumeUrl}
+                variant="outline"
+                icon={Download}
+                download
+              >
+                Download CV
+              </HeroLink>
 
-              <div className="flex items-center gap-5">
-                <HeroLink href="#contact">Get in touch</HeroLink>
-
-                <span className="h-3 w-px bg-muted/30" aria-hidden="true" />
-
-                <HeroLink href={siteConfig.resumeUrl}>Download CV</HeroLink>
-              </div>
+              <HeroLink href="#contact">Get in touch</HeroLink>
             </FadeUp>
           </div>
         </div>

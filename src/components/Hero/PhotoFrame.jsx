@@ -7,8 +7,9 @@ import {
 } from "framer-motion";
 import { Code2, Database, Server } from "lucide-react";
 import profilePhoto from "../../assets/merera.jpg";
+import { siteConfig } from "../../data/siteConfig.js";
 
-// Floating glass chip that hovers near a corner of the portrait, labelling
+// Floating glass chip that hovers near the edge of the portrait, labelling
 // one layer of the stack. Purely decorative metadata, not a fake stat.
 function FloatingBadge({ icon: Icon, label, className, delay = 0 }) {
   return (
@@ -36,7 +37,7 @@ function FloatingBadge({ icon: Icon, label, className, delay = 0 }) {
   );
 }
 
-// The hero's portrait: a gradient-bordered glass frame with a restrained
+// The hero's portrait: a gradient-bordered circular frame with a restrained
 // ambient glow, gentle cursor-parallax tilt, a clip-path reveal on entrance,
 // and a few floating stack badges.
 function PhotoFrame({ revealDelay = 0 }) {
@@ -64,11 +65,11 @@ function PhotoFrame({ revealDelay = 0 }) {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-sm md:max-w-none">
+    <div className="relative mx-auto w-full max-w-sm md:max-w-md">
       {/* Restrained ambient glow — small and dim, supporting the portrait
           rather than competing with it */}
       <div
-        className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-accent/15 via-violet/10 to-transparent blur-2xl animate-glowPulse"
+        className="absolute -inset-4 rounded-full bg-gradient-to-br from-accent/15 via-violet/10 to-transparent blur-2xl animate-glowPulse"
         aria-hidden="true"
       />
 
@@ -96,36 +97,36 @@ function PhotoFrame({ revealDelay = 0 }) {
           delay: revealDelay,
           ease: [0.65, 0, 0.35, 1],
         }}
-        className="relative rounded-[2rem] p-[1.5px] bg-gradient-to-br from-accent/70 via-border to-violet/70 shadow-2xl shadow-black/40"
+        className="relative rounded-full p-[1.5px] bg-gradient-to-br from-accent/70 via-border to-violet/70 shadow-2xl shadow-black/40"
       >
-        <div className="relative overflow-hidden rounded-[2rem] bg-elevated">
+        <div className="relative overflow-hidden rounded-full bg-elevated">
           <img
             src={profilePhoto}
-            alt="Portrait of "
-            className="aspect-[4/5] w-full object-cover"
-            width={480}
+            alt={`Portrait of ${siteConfig.name}`}
+            className="aspect-square w-full object-cover object-top"
+            width={600}
             height={600}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/60 via-transparent to-transparent" />
         </div>
       </motion.div>
 
       <FloatingBadge
         icon={Code2}
         label="React"
-        className="-left-6 top-8"
+        className="left-0 top-[12%]"
         delay={revealDelay + 0.5}
       />
       <FloatingBadge
         icon={Server}
         label="Node.js"
-        className="-right-6 top-1/2 -translate-y-1/2"
+        className="-right-2 top-1/2 -translate-y-1/2"
         delay={revealDelay + 1}
       />
       <FloatingBadge
         icon={Database}
         label="MongoDB"
-        className="-left-4 bottom-10"
+        className="bottom-[10%] left-[2%]"
         delay={revealDelay + 1.5}
       />
     </div>
