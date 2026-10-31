@@ -6,19 +6,19 @@ export const socialLinks = [
   {
     id: "github",
     label: "GitHub",
-    href: "https://github.com/merera-taddesa",
+    href: "https://github.com/merera-ta",
     icon: Github,
   },
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://linkedin.com/in/merera-taddesa",
+    href: "https://www.linkedin.com/in/merera-taddesa/",
     icon: Linkedin,
   },
   {
     id: "telegram",
     label: "Telegram",
-    href: "https://t.me/merera_taddesa",
+    href: "https://t.me/maro_ta",
     icon: Send,
   },
   {
