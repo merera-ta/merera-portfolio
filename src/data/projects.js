@@ -16,17 +16,7 @@ export const projects = [
     featured: true,
     visual: 'dashboard',
   },
-  {
-    id: 'registration-form',
-    title: 'Registration Form',
-    description:
-      'A full-stack registration system with client-side validation, a REST API backend, and persistent storage for submitted records.',
-    tech: ['React', 'Node.js', 'Express', 'MongoDB'],
-    github: 'https://github.com/merera-taddesa/registration-form',
-    demo: '',
-    featured: false,
-    visual: 'form',
-  },
+ 
   {
     id: 'ecommerce-app',
     title: 'E-Commerce Application',
@@ -45,3 +35,4 @@ export const projects = [
 export const projectTechFilters = Array.from(
   new Set(projects.flatMap((project) => project.tech))
 ).sort()
+
