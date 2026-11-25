@@ -8,7 +8,7 @@ editorial, typography-led art direction instead of a stacked-card layout.
 ## What changed in this pass
 
 The previous version (glass cards, centered hero, card-grid skills) is now
-one folder back. This pass replaced the *composition*, not the content:
+one folder back. This pass replaced the _composition_, not the content:
 
 - **Hero** — rebuilt as an editorial spread: a small uppercase metadata
   line, an oversized two-line display name (`Merera` / `Taddesa`, the
@@ -37,7 +37,7 @@ one folder back. This pass replaced the *composition*, not the content:
   something useful.") before the existing validated form.
 - **Custom cursor** — extended to support a labelled state
   (`data-cursor-label="..."`), used on project visuals; still fine-pointer
-  + motion-allowed only, exactly as before.
+  - motion-allowed only, exactly as before.
 - **Background** — the hero's gradient mesh was dimmed and slowed further
   (smaller glows, lower opacity, 26s drift instead of 16s) to stay
   texture, not spectacle.
@@ -97,9 +97,9 @@ on-brand placeholder illustration.
 2. In `src/components/Hero/PhotoFrame.jsx`, change:
 
    ```js
-   import profilePhoto from '../../assets/profile-photo-placeholder.svg'
+   import profilePhoto from "../../assets/profile-photo-placeholder.svg";
    // to:
-   import profilePhoto from '../../assets/profile-photo.jpg'
+   import profilePhoto from "../../assets/profile-photo.jpg";
    ```
 
 A portrait-orientation photo (roughly 4:5) with even lighting fits the
@@ -109,7 +109,7 @@ frame best.
 
 `src/data/siteConfig.js` — name, role, tagline, university, email, and the
 About bio paragraph. To update your CV, replace
-`public/Merera-Taddesa-CV.pdf` (currently a placeholder), keeping the
+`public/Merera_Taddesa_CV(1).pdf` (currently a placeholder), keeping the
 filename.
 
 ## 8. How to add projects
